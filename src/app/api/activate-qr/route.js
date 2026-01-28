@@ -1,7 +1,12 @@
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(req) {
   const formData = await req.formData();
@@ -9,36 +14,33 @@ export async function POST(req) {
   const qrId = formData.get("qrId");
   const name = formData.get("name");
   const age = formData.get("age");
-  const files = formData.getAll("photos");
+  const photos = formData.getAll("photos");
 
-  // Validate QR
-  const [qr] = await db.query(
-    "SELECT * FROM qr_master WHERE qr_id = ? AND is_used = FALSE",
-    [qrId]
-  );
+  const photoUrls = [];
 
-  if (qr.length === 0) {
-    return NextResponse.json({ error: "Invalid QR" }, { status: 400 });
-  }
-
-  const uploadDir = path.join(process.cwd(), "public/uploads");
-  const photoPaths = [];
-
-  for (const file of files) {
+  for (const file of photos) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const filename = `${Date.now()}-${file.name}`;
-    const filePath = path.join(uploadDir, filename);
+    const uploadResult = await new Promise((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        {
+          folder: `qr/${qrId}`,
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      ).end(buffer);
+    });
 
-    fs.writeFileSync(filePath, buffer);
-    photoPaths.push(`/uploads/${filename}`);
+    photoUrls.push(uploadResult.secure_url);
   }
 
   // Save to DB
   await db.query(
     "INSERT INTO qr_data (qr_id, name, age, photos) VALUES (?, ?, ?, ?)",
-    [qrId, name, age, JSON.stringify(photoPaths)]
+    [qrId, name, age, JSON.stringify(photoUrls)]
   );
 
   await db.query(
