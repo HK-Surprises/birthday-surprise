@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { Gift } from "lucide-react"
 import Button from "../Button"
 
-export default function IntroScreen({ onNext }) {
+export default function IntroScreen({ onNext, name, age }) {
     return (
         <motion.div
             className="bg-[#fff8fc] p-7 rounded-[60px] drop-shadow-2xl  min-w-48 w-full max-w-110 relative flex flex-col items-center gap-4"
@@ -23,7 +23,7 @@ export default function IntroScreen({ onNext }) {
                     style={{
                         filter: "drop-shadow(0 0 20px rgba(255,105,180,0.4))",
                     }}>
-                    A Cutiepie was born today, 21 years ago!
+                    A {name} was born today, {age} years ago!
                 </h1>
                 <p className="mt-4 text-foreground will-change-transform">Yes, it’s YOU! A little surprise awaits...</p>
             </div>

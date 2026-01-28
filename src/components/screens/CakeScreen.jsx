@@ -15,7 +15,7 @@ const confettiColors = [
 ];
 
 
-export default function CakeScreen({ onNext }) {
+export default function CakeScreen({ onNext, name }) {
   const [lit, setLit] = useState(false)
 
   const lightCandle = () => {
@@ -41,7 +41,7 @@ export default function CakeScreen({ onNext }) {
         animate={lit ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
         transition={{ duration: 1, ease: "easeOut", delay: lit ? 0.5 : 0 }}
       >
-        Happy Birthday, Cutiepiee!
+        Happy Birthday, {name}!
       </motion.div>
 
 

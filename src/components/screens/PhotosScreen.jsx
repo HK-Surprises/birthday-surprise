@@ -15,7 +15,7 @@ const photos = [
   "/images/4.jpg",
 ]
 
-export default function PhotosScreen({ onNext }) {
+export default function PhotosScreen({ onNext,photos = [] }) {
 
   return (
     <div className="bg-[#fff8fc] p-7 rounded-[60px] drop-shadow-2xl min-w-48 w-full max-w-110 relative flex flex-col items-center gap-4 my-10">
@@ -39,24 +39,20 @@ export default function PhotosScreen({ onNext }) {
             className="w-53.75 h-70 md:w-59.25 md:h-77.5"
           >
             {photos.map((src, i) => (
-              <SwiperSlide key={i}>
-                <motion.div
-                  className="h-full w-full rounded-3xl"
-                >
-
-                  <div className="relative h-full w-full rounded-2xl overflow-hidden ">
-
-                    {/* Image */}
-                    <img
-                      loading="lazy"
-                      src={src}
-                      alt={`Memory ${i + 1}`}
-                      className="h-full w-full rounded-2xl object-contain"
-                    />
-                  </div>
-                </motion.div>
-              </SwiperSlide>
+                <SwiperSlide key={i}>
+                  <motion.div className="h-full w-full rounded-3xl">
+                    <div className="relative h-full w-full rounded-2xl overflow-hidden">
+                      <img
+                        loading="lazy"
+                        src={src}
+                        alt={`Memory ${i + 1}`}
+                        className="h-full w-full rounded-2xl object-cover"
+                      />
+                    </div>
+                  </motion.div>
+                </SwiperSlide>
             ))}
+
           </Swiper>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-export default function MessageScreen() {
+export default function MessageScreen({ name, age }) {
     const [opened, setOpened] = useState(false)
 
     return (
@@ -27,7 +27,7 @@ export default function MessageScreen() {
                 <div className={`cover ${opened ? "opacity-0" : "opacity-100"} pointer-events-none z-10 bg-[#ffedea]!`} />
 
                 <div className="relative px-6 h-56 overflow-y-auto text-foreground">
-                    Happy Birthday, Cutiepie! You deserve all the happiness, love, and smiles in the world today and always. You have this special way of making everything around you brighter, your smile, your kindness, and the way you make people feel truly cared for. I hope your day is filled with laughter, surprises, and moments that make your heart happy. You’re truly one of a kind, and I just want you to know how special you are. Keep being the amazing person you are, spreading joy wherever you go. Wishing you endless happiness, success, and all the sweet things life has to offer. 💗
+                    Happy Birthday, {name}! You deserve all the happiness, love, and smiles in the world today and always. You have this special way of making everything around you brighter, your smile, your kindness, and the way you make people feel truly cared for. I hope your day is filled with laughter, surprises, and moments that make your heart happy. You’re truly one of a kind, and I just want you to know how special you are. Keep being the amazing person you are, spreading joy wherever you go. Wishing you endless happiness, success, and all the sweet things life has to offer. 💗
                 </div>
             </div>
         </div>
