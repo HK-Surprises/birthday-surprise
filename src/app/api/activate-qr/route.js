@@ -13,8 +13,21 @@ export async function POST(req) {
 
   const qrId = formData.get("qrId");
   const name = formData.get("name");
-  const age = formData.get("age");
+  const age = Number(formData.get("age"));
   const photos = formData.getAll("photos");
+
+  // safety check
+  const qrCheck = await db.query(
+    "SELECT is_used FROM qr_master WHERE qr_id = $1 AND is_used = false",
+    [qrId]
+  );
+
+  if (qrCheck.rows.length === 0) {
+    return NextResponse.json(
+      { error: "Invalid or already used QR" },
+      { status: 400 }
+    );
+  }
 
   const photoUrls = [];
 
@@ -22,29 +35,26 @@ export async function POST(req) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const uploadResult = await new Promise((resolve, reject) => {
+    const upload = await new Promise((resolve, reject) => {
       cloudinary.uploader.upload_stream(
-        {
-          folder: `qr/${qrId}`,
-        },
-        (error, result) => {
-          if (error) reject(error);
+        { folder: `qr/${qrId}` },
+        (err, result) => {
+          if (err) reject(err);
           else resolve(result);
         }
       ).end(buffer);
     });
 
-    photoUrls.push(uploadResult.secure_url);
+    photoUrls.push(upload.secure_url);
   }
 
-  // Save to DB
   await db.query(
-    "INSERT INTO qr_data (qr_id, name, age, photos) VALUES (?, ?, ?, ?)",
-    [qrId, name, age, JSON.stringify(photoUrls)]
+    "INSERT INTO qr_data (qr_id, name, age, photos) VALUES ($1, $2, $3, $4)",
+    [qrId, name, age, photoUrls]
   );
 
   await db.query(
-    "UPDATE qr_master SET is_used = TRUE WHERE qr_id = ?",
+    "UPDATE qr_master SET is_used = true WHERE qr_id = $1",
     [qrId]
   );
 
