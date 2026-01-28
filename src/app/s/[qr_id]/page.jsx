@@ -4,7 +4,7 @@ import OriginalTheme from "@/components/OriginalTheme";
 
 export default async function QRPage({ params }) {
   const { qr_id } = await params;
-
+console.log("DB connected");
   // 1️⃣ check QR exists
   const masterRes = await db.query(
     "SELECT is_used FROM qr_master WHERE qr_id = $1",
