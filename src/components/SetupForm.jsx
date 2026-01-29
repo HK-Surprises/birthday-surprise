@@ -2,12 +2,12 @@
 
 import { useState, useRef } from "react";
 
-/**
- * SAME SONG IDS as OriginalTheme
- */
 const SONG_MAP = {
   birthday1: "/songs/birthday1.mp3",
   birthday2: "/songs/birthday2.mp3",
+  birthday2: "/songs/birthday3.mp3",
+  birthday2: "/songs/birthday4.mp4",
+  birthday2: "/songs/birthday5.mp5",
 };
 
 export default function SetupForm({ qrId }) {
@@ -112,7 +112,9 @@ export default function SetupForm({ qrId }) {
           <option value="">Select Song</option>
           <option value="birthday1">Happy Birthday 1 🎂</option>
           <option value="birthday2">Happy Birthday 2 🎂</option>
-
+          <option value="birthday3">Happy Birthday 3 🎂</option>
+          <option value="birthday4">Happy Birthday 4 🎂</option>
+          <option value="birthday5">Happy Birthday 5 🎂</option>
         </select>
 
         {/* ▶ Play / Pause Preview */}

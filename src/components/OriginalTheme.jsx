@@ -9,17 +9,12 @@ import CakeScreen from "@/components/screens/CakeScreen";
 import PhotosScreen from "@/components/screens/PhotosScreen";
 import MessageScreen from "@/components/screens/MessageScreen";
 
-/**
- * SONG MAP
- * id (DB)  ->  mp3 file (public folder)
- */
 const SONG_MAP = {
   birthday1: "/songs/birthday1.mp3",
-  romantic1: "/songs/romantic1.mp3",
-  hindi1: "/songs/hindi1.mp3",
-  english1: "/songs/english1.mp3",
-  instrumental1: "/songs/instrumental1.mp3",
-  // add all 10 here
+  birthday2: "/songs/birthday2.mp3",
+  birthday3: "/songs/birthday3.mp3",
+  birthday4: "/songs/birthday4.mp3",
+  birthday5: "/songs/birthday5.mp3",
 };
 
 export default function OriginalTheme({ name, age, photos, song }) {
