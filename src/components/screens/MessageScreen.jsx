@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import Button from "../Button"
+import { Gift } from "lucide-react"
 
 export default function MessageScreen({ name, age }) {
     const [opened, setOpened] = useState(false)
@@ -29,6 +31,18 @@ export default function MessageScreen({ name, age }) {
                 <div className="relative px-6 h-56 overflow-y-auto text-foreground">
                     Happy Birthday, {name}! You deserve all the happiness, love, and smiles in the world today and always. You have this special way of making everything around you brighter, your smile, your kindness, and the way you make people feel truly cared for. I hope your day is filled with laughter, surprises, and moments that make your heart happy. You’re truly one of a kind, and I just want you to know how special you are. Keep being the amazing person you are, spreading joy wherever you go. Wishing you endless happiness, success, and all the sweet things life has to offer. 💗
                 </div>
+            </div>
+            <div
+                className="mt-4">
+                <Button
+                    onClick={() => {
+                        window.location.reload();
+                    }}
+                    className="bg-[#f1caeb] text-primary"
+                >
+                    <Gift size={20} />
+                    Start the surprise Again
+                </Button>
             </div>
         </div>
     )
