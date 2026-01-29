@@ -15,6 +15,8 @@ export async function POST(req) {
   const name = formData.get("name");
   const age = Number(formData.get("age"));
   const photos = formData.getAll("photos");
+  const song = formData.get("song");
+
 
   // safety check
   const qrCheck = await db.query(
@@ -49,9 +51,10 @@ export async function POST(req) {
   }
 
   await db.query(
-    "INSERT INTO qr_data (qr_id, name, age, photos) VALUES ($1, $2, $3, $4::jsonb)",
-    [qrId, name, age, JSON.stringify(photoUrls)]
+    "INSERT INTO qr_data (qr_id, name, age, photos, song) VALUES ($1, $2, $3, $4::jsonb, $5)",
+    [qrId, name, age, JSON.stringify(photoUrls), song]
   );
+
 
 
   await db.query(

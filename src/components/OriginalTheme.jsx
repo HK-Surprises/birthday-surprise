@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import LoaderScreen from "@/components/screens/LoaderScreen";
@@ -9,8 +9,22 @@ import CakeScreen from "@/components/screens/CakeScreen";
 import PhotosScreen from "@/components/screens/PhotosScreen";
 import MessageScreen from "@/components/screens/MessageScreen";
 
-export default function OriginalTheme({ name, age,photos }) {
+/**
+ * SONG MAP
+ * id (DB)  ->  mp3 file (public folder)
+ */
+const SONG_MAP = {
+  birthday1: "/songs/birthday1.mp3",
+  romantic1: "/songs/romantic1.mp3",
+  hindi1: "/songs/hindi1.mp3",
+  english1: "/songs/english1.mp3",
+  instrumental1: "/songs/instrumental1.mp3",
+  // add all 10 here
+};
+
+export default function OriginalTheme({ name, age, photos, song }) {
   const [currentScreen, setCurrentScreen] = useState(0);
+  const audioRef = useRef(null);
 
   const screens = [
     <LoaderScreen
@@ -40,8 +54,32 @@ export default function OriginalTheme({ name, age,photos }) {
     />,
   ];
 
+  /**
+   * 🎵 PLAY MUSIC
+   * Start playing AFTER loader (screen >= 1)
+   */
+  useEffect(() => {
+    if (currentScreen >= 1 && audioRef.current) {
+      audioRef.current.play().catch(() => {
+        // browser autoplay block ignore
+      });
+    }
+  }, [currentScreen]);
+
+  const songSrc = SONG_MAP[song];
+
   return (
     <main className="min-h-screen overflow-hidden relative">
+      {/* 🎵 AUDIO PLAYER */}
+      {songSrc && (
+        <audio
+          ref={audioRef}
+          src={songSrc}
+          loop
+          preload="auto"
+        />
+      )}
+
       <div className="relative z-10 flex min-h-screen items-center justify-center p-4 md:p-6">
         <AnimatePresence mode="wait">
           <motion.div

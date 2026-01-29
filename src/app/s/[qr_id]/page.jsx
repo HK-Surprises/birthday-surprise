@@ -22,7 +22,7 @@
 
     // 2️⃣ check QR data
     const dataRes = await db.query(
-      "SELECT name, age, photos FROM qr_data WHERE qr_id = $1",
+      "SELECT name, age, photos, song FROM qr_data WHERE qr_id = $1",
       [qr_id]
     );
 
@@ -34,6 +34,7 @@
           name={row.name}
           age={row.age}
           photos={row.photos || []}
+          song={row.song}
         />
       );
     }
