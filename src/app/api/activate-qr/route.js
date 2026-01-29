@@ -49,9 +49,10 @@ export async function POST(req) {
   }
 
   await db.query(
-    "INSERT INTO qr_data (qr_id, name, age, photos) VALUES ($1, $2, $3, $4)",
-    [qrId, name, age, photoUrls]
+    "INSERT INTO qr_data (qr_id, name, age, photos) VALUES ($1, $2, $3, $4::jsonb)",
+    [qrId, name, age, JSON.stringify(photoUrls)]
   );
+
 
   await db.query(
     "UPDATE qr_master SET is_used = true WHERE qr_id = $1",
