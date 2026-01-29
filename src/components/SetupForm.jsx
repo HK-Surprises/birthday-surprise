@@ -6,8 +6,8 @@ const SONG_MAP = {
   birthday1: "/songs/birthday1.mp3",
   birthday2: "/songs/birthday2.mp3",
   birthday3: "/songs/birthday3.mp3",
-  birthday4: "/songs/birthday4.mp4",
-  birthday5: "/songs/birthday5.mp5",
+  birthday4: "/songs/birthday4.mp3",
+  birthday5: "/songs/birthday5.mp3",
 };
 
 export default function SetupForm({ qrId }) {
